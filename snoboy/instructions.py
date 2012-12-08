@@ -19,7 +19,7 @@ Set a bit in a register
 # 0xF8 is SET 7, B
 
 
-SET_REGISTER_MAP = {
+BIT_REGISTER_MAP = {
     0x00: 'B',
     0x01: 'C',
     0x02: 'D',
@@ -30,15 +30,29 @@ SET_REGISTER_MAP = {
 }
 
 
-def set(opcode):
-    bit = 0
-    opcode -= 0xc0
-    while (opcode >= 0x08):
-        opcode -= 0x08
-        bit = bit + 1
+def _bit_op(base_opcode):
+    def decorator(op):
+        def func(opcode):
+            bit = 0
+            opcode -= base_opcode
+            while (opcode >= 0x08):
+                opcode -= 0x08
+                bit = bit + 1
 
-    if opcode == 0x06:
-        raise NotImplementedError("set n,(HL) not implemented yet")
-    else:
-        register_name = SET_REGISTER_MAP[opcode]
-        cpu.registers[register_name] = cpu.registers[register_name] | (1 << bit)
+            if opcode == 0x06:
+                raise NotImplementedError("set n,(HL) not implemented yet")
+            else:
+                register = BIT_REGISTER_MAP[opcode]
+                cpu.registers[register] = op(cpu.registers[register], bit)
+        return func
+    return decorator
+
+
+@_bit_op(0xc0)
+def set(register_value, bit):
+    return register_value | (1 << bit)
+
+
+@_bit_op(0x80)
+def res(register_value, bit):
+    return register_value & ~(1 << bit)
