@@ -37,5 +37,8 @@ def set(opcode):
         opcode -= 0x08
         bit = bit + 1
 
-    register_name = SET_REGISTER_MAP[opcode]
-    cpu.registers[register_name] = cpu.registers[register_name] | (1 << bit)
+    if opcode == 0x06:
+        raise NotImplementedError("set n,(HL) not implemented yet")
+    else:
+        register_name = SET_REGISTER_MAP[opcode]
+        cpu.registers[register_name] = cpu.registers[register_name] | (1 << bit)
