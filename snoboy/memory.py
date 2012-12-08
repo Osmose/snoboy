@@ -33,10 +33,8 @@ def read(loc):
         pass
     elif loc <= 0xCFFF:
         # Internal RAM Bank 0
-        pass
-    elif loc <= 0xDFFF:
-        # Internal RAM Switchable Bank (CGB only)
-        pass
+        # 0xD000 = Internal RAM Switchable Bank (CGB only)
+        return main_ram[loc - 0xC000]
     elif loc <= 0xFDFF:
         # Echo RAM
         pass
@@ -87,10 +85,8 @@ def write(loc, value):
         pass
     elif loc <= 0xCFFF:
         # Internal RAM Bank 0
-        pass
-    elif loc <= 0xDFFF:
-        # Internal RAM Switchable Bank (CGB only)
-        pass
+        # 0xD000 = Internal RAM Switchable Bank (CGB only)
+        main_ram[loc - 0xC000] = value
     elif loc <= 0xFDFF:
         # Echo RAM
         pass
