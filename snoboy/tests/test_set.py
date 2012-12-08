@@ -1,14 +1,13 @@
-from snoboy.instructions import set
 import unittest
 
-class Set(unittest.TestCase):
-	def testSet(self):
-		bit = 0
-		for val in range(0xC0, 0xFF, 8):
-			cpu.registers.b = 0
-			set(opcode)
-			self.assertEquals(cpu.registers.b, 1<<bit)
-			bit = bit + 1
+from snoboy import cpu, instructions
 
-if __name__ == "__main__":
-	unittest.main();
+
+class Set(unittest.TestCase):
+    def testSet(self):
+        bit = 0
+        for opcode in range(0xC0, 0xFF, 8):
+            cpu.registers.B = 0
+            instructions.set(opcode)
+            self.assertEquals(cpu.registers.B, 1 << bit)
+            bit = bit + 1
