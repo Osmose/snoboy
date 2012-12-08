@@ -38,4 +38,10 @@ class Registers(object):
     BC = _compound_register(B, C)
     DE = _compound_register(D, E)
     HL = _compound_register(H, L)
+
+    def __getitem__(self, index):
+        return getattr(self, index)
+
+    def __setitem__(self, index, value):
+        setattr(self, index, value)
 registers = Registers()

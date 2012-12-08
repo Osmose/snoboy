@@ -19,27 +19,23 @@ Set a bit in a register
 # 0xF8 is SET 7, B
 
 
+SET_REGISTER_MAP = {
+    0x00: 'B',
+    0x01: 'C',
+    0x02: 'D',
+    0x03: 'E',
+    0x04: 'H',
+    0x05: 'L',
+    0x07: 'A'
+}
+
+
 def set(opcode):
     bit = 0
-    reg = 0
     opcode -= 0xc0
     while (opcode >= 0x08):
         opcode -= 0x08
         bit = bit + 1
 
-    if (opcode == 0x00):
-        cpu.registers.B = cpu.registers.B | (1<<bit)
-    elif (opcode == 0x01):
-        cpu.registers.C = cpu.registers.C | (1<<bit)
-    elif (opcode == 0x02):
-        cpu.registers.D = cpu.registers.D | (1<<bit)
-    elif (opcode == 0x03):
-        cpu.registers.E = cpu.registers.E | (1<<bit)
-    elif (opcode == 0x04):
-        cpu.registers.H = cpu.registers.H | (1<<bit)
-    elif (opcode == 0x05):
-        cpu.registers.L = cpu.registers.L | (1<<bit)
-    elif (opcode == 0x06):
-        cpu.registers.HL = cpu.registers.HL | (1<<bit)
-    elif (opcode == 0x07):
-        cpu.registers.A = cpu.registers.A | (1<<bit)
+    register_name = SET_REGISTER_MAP[opcode]
+    cpu.registers[register_name] = cpu.registers[register_name] | (1 << bit)
