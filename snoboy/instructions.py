@@ -23,25 +23,23 @@ def set(opcode):
     bit = 0
     reg = 0
     opcode -= 0xc0
-    while (opcode > 0x07):
-        opcode -= 0x07
+    while (opcode >= 0x08):
+        opcode -= 0x08
         bit = bit + 1
 
     if (opcode == 0x00):
-        reg = cpu.registers.B
+        cpu.registers.B = cpu.registers.B | (1<<bit)
     elif (opcode == 0x01):
-        reg = cpu.registers.C
+        cpu.registers.C = cpu.registers.C | (1<<bit)
     elif (opcode == 0x02):
-        reg = cpu.registers.D
+        cpu.registers.D = cpu.registers.D | (1<<bit)
     elif (opcode == 0x03):
-        reg = cpu.registers.E
+        cpu.registers.E = cpu.registers.E | (1<<bit)
     elif (opcode == 0x04):
-        reg = cpu.registers.H
+        cpu.registers.H = cpu.registers.H | (1<<bit)
     elif (opcode == 0x05):
-        reg = cpu.registers.L
+        cpu.registers.L = cpu.registers.L | (1<<bit)
     elif (opcode == 0x06):
-        reg = cpu.registers.HL
+        cpu.registers.HL = cpu.registers.HL | (1<<bit)
     elif (opcode == 0x07):
-        reg = cpu.registers.A
-
-    reg = reg | (1 >> bit)
+        cpu.registers.A = cpu.registers.A | (1<<bit)
