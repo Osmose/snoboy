@@ -1,4 +1,4 @@
-from snoboy import cpu
+from snoboy import cpu, memory
 
 """
 Set a bit in a register
@@ -40,19 +40,38 @@ def _bit_op(base_opcode):
                 bit = bit + 1
 
             if opcode == 0x06:
+                cpu.add_ticks(16)
                 raise NotImplementedError("set n,(HL) not implemented yet")
             else:
+                cpu.add_ticks(8)
                 register = BIT_REGISTER_MAP[opcode]
                 cpu.registers[register] = op(cpu.registers[register], bit)
         return func
     return decorator
 
 
+# 0xCB 0xC0-0xFF
 @_bit_op(0xc0)
 def set(register_value, bit):
     return register_value | (1 << bit)
 
-
+# 0xCB 0x80 - 0xBF
 @_bit_op(0x80)
 def res(register_value, bit):
     return register_value & ~(1 << bit)
+
+# 0x00
+def nop():
+    cpu.add_ticks(4)
+    return
+
+# 0xC3 - Absolute jump to 16bit address
+def jp_a16():
+    cpu.add_ticks(16)
+    print cpu.registers.PC
+    lower = memory.read(cpu.registers.PC)
+    upper = memory.read(cpu.registers.PC+1)
+    jaddress = (upper << 8) | (lower & 0xFF)
+    cpu.registers.PC = jaddress
+
+    return
