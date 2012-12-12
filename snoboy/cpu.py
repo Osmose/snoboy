@@ -2,9 +2,12 @@ from ctypes import c_ubyte, c_ushort
 
 # how many cycles we've executed
 ticks = 0
+
+
 def add_ticks(t):
     global ticks
     ticks = ticks + t
+
 
 def _register16(default=0):
     """Create a property around a c_ushort"""
@@ -12,9 +15,12 @@ def _register16(default=0):
 
     def get(self):
         return _value.value
+
     def set(self, value):
         _value.value = value
-    return property(get,set)
+
+    return property(get, set)
+
 
 def _register(default=0):
     """Create a property around a c_ubyte."""
@@ -35,8 +41,8 @@ def _compound_register(upper, lower):
         return (upper.fget(None) << 8) | lower.fget(None)
 
     def set(self, value):
-        upper = value >> 8
-        lower = value
+        upper.fset(None, value >> 8)
+        lower.fset(None, value)
 
     return property(get, set)
 
