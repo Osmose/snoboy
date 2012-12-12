@@ -1,6 +1,7 @@
 from array import array
 from itertools import repeat
 
+from snoboy import cart
 
 main_ram = array('B',  repeat(0, 0x2000))
 
@@ -9,13 +10,13 @@ def read(loc):
     """Read a location in memory."""
     if loc <= 0x00FF:
         # Restart and Interrupt Vectors
-        pass
+        return cart.cart_data[loc]
     elif loc <= 0x014F:
         # Cartridge Header Area
-        pass
+        return cart.cart_data[loc]
     elif loc <= 0x3FFF:
         # Cartridge ROM Bank 0
-        pass
+        return cart.cart_data[loc]
     elif loc <= 0x7FFF:
         # Cartridge ROM Switchable Bank
         pass
