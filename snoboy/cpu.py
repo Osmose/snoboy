@@ -1,10 +1,20 @@
-from ctypes import c_ubyte
+from ctypes import c_ubyte, c_ushort
 
 # how many cycles we've executed
 ticks = 0
 def add_ticks(t):
     global ticks
     ticks = ticks + t
+
+def _register16(default=0):
+    """Create a property around a c_ushort"""
+    _value = c_ushort(default)
+
+    def get(self):
+        return _value.value
+    def set(self, value):
+        _value.value = value
+    return property(get,set)
 
 def _register(default=0):
     """Create a property around a c_ubyte."""
@@ -44,14 +54,8 @@ class Registers(object):
     DE = _compound_register(D, E)
     HL = _compound_register(H, L)
 
-    # Really there aren't these half registers...
-    _SP1 = _register()
-    _SP2 = _register()
-    SP = _compound_register(_SP1,_SP2)
-
-    _PC1 = _register()
-    _PC2 = _register()
-    PC = _compound_register(_PC1,_PC2)
+    SP = _register16()
+    PC = _register16()
 
     def __getitem__(self, index):
         return getattr(self, index)
