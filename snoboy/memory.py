@@ -57,54 +57,57 @@ def read(loc):
     else:
         raise IndexError
 
+    print "Memory location 0x%x not implemented" % loc
+    return 0
+
 
 def write(loc, value):
     """Write to a location in memory."""
     if loc <= 0x00FF:
         # Restart and Interrupt Vectors
-        pass
+        print "Memory location 0x%x not implemented" % loc
     elif loc <= 0x014F:
         # Cartridge Header Area
-        pass
+        print "Memory location 0x%x not implemented" % loc
     elif loc <= 0x3FFF:
         # Cartridge ROM Bank 0
-        pass
+        print "Memory location 0x%x not implemented" % loc
     elif loc <= 0x7FFF:
         # Cartridge ROM Switchable Bank
-        pass
+        print "Memory location 0x%x not implemented" % loc
     elif loc <= 0x97FF:
         # Character RAM
-        pass
+        print "Memory location 0x%x not implemented" % loc
     elif loc <= 0x9BFF:
         # BG Map Data 1
-        pass
+        print "Memory location 0x%x not implemented" % loc
     elif loc <= 0x9FFF:
         # BG Map Data 2
-        pass
+        print "Memory location 0x%x not implemented" % loc
     elif loc <= 0xBFFF:
         # Cartridge RAM
-        pass
+        print "Memory location 0x%x not implemented" % loc
     elif loc <= 0xCFFF:
         # Internal RAM Bank 0
         # 0xD000 = Internal RAM Switchable Bank (CGB only)
         main_ram[loc - 0xC000] = value
     elif loc <= 0xFDFF:
         # Echo RAM
-        pass
+        print "Memory location 0x%x not implemented" % loc
     elif loc <= 0xFE9F:
         # OAM RAM
-        pass
+        print "Memory location 0x%x not implemented" % loc
     elif loc <= 0xFEFF:
         # Unusable memory
-        pass
+        print "Memory location 0x%x not implemented" % loc
     elif loc <= 0xFF7F:
         # Hardware I/O Registers
-        pass
+        print "Memory location 0x%x not implemented" % loc
     elif loc <= 0xFFFE:
         # Zero Page
-        pass
+        print "Memory location 0x%x not implemented" % loc
     elif loc == 0xFFFF:
         # Interrupt enable flag
-        pass
+        print "Interrupt enable flag not imlemented(Memory locatin 0xFFFF)"
     else:
         raise IndexError

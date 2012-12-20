@@ -1,6 +1,6 @@
 from nose.tools import eq_, ok_
 
-from snoboy import memory, cart
+from snoboy import memory, cart, cpu, instructions
 
 def test_cart():
     cart.loadCart('sml.gb')
